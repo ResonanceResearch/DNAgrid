@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DNA Sequence Walk</title>
+  <meta name="description" content="Visualize DNA sequences as A/T and G/C coordinate walks.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div>
+      <h1>DNA Sequence Walk</h1>
+      <p>Plot DNA as a path on an A–T and G–C coordinate grid.</p>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="panel controls" aria-label="Sequence input and plotting controls">
+      <h2>Input</h2>
+
+      <label class="field">
+        <span>Paste sequence or FASTA</span>
+        <textarea id="sequenceInput" spellcheck="false" placeholder="Paste DNA or FASTA here..."></textarea>
+      </label>
+
+      <label class="field">
+        <span>Upload FASTA</span>
+        <input id="fileInput" type="file" accept=".fasta,.fa,.fna,.txt,text/plain">
+      </label>
+
+      <label class="field">
+        <span>FASTA record</span>
+        <select id="recordSelect" disabled>
+          <option value="">No FASTA records loaded</option>
+        </select>
+      </label>
+
+      <div class="grid-2">
+        <label class="field">
+          <span>Start position, 1-based</span>
+          <input id="startPosition" type="number" min="1" value="1">
+        </label>
+
+        <label class="field">
+          <span>End position, optional</span>
+          <input id="endPosition" type="number" min="1" placeholder="End">
+        </label>
+      </div>
+
+      <label class="field">
+        <span>Maximum bases to plot</span>
+        <input id="maxBases" type="number" min="100" step="100" value="50000">
+      </label>
+
+      <div class="checkbox-row">
+        <label>
+          <input id="skipAmbiguous" type="checkbox" checked>
+          Skip ambiguous bases
+        </label>
+      </div>
+
+      <div class="button-row">
+        <button id="plotButton" class="primary">Plot sequence</button>
+        <button id="clearButton" type="button">Clear</button>
+      </div>
+
+      <h2>Summary</h2>
+      <div id="summary" class="summary">
+        No sequence plotted yet.
+      </div>
+
+      <h2>Export</h2>
+      <div class="button-row">
+        <button id="downloadSvgButton" type="button" disabled>Download SVG</button>
+        <button id="downloadCsvButton" type="button" disabled>Download CSV</button>
+      </div>
+
+      <details>
+        <summary>Movement rules</summary>
+        <ul>
+          <li>A moves right on the A–T axis.</li>
+          <li>T moves left on the A–T axis.</li>
+          <li>G moves up on the G–C axis.</li>
+          <li>C moves down on the G–C axis.</li>
+        </ul>
+      </details>
+    </section>
+
+    <section class="panel plot-panel" aria-label="DNA walk plot">
+      <div class="plot-toolbar">
+        <div>
+          <h2>Walk plot</h2>
+          <p id="plotSubtitle">Paste or upload a sequence to begin.</p>
+        </div>
+        <div class="button-row">
+          <button id="resetViewButton" type="button" disabled>Reset view</button>
+        </div>
+      </div>
+
+      <div id="plotWrap" class="plot-wrap">
+        <svg id="plotSvg" role="img" aria-label="DNA walk plot"></svg>
+        <div id="emptyState" class="empty-state">
+          <strong>No plot yet</strong>
+          <span>Enter DNA sequence data and press “Plot sequence”.</span>
+        </div>
+      </div>
+
+      <div class="hint">
+        Mouse wheel or trackpad to zoom. Drag to pan.
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>DNA Sequence Walk · static GitHub Pages app</span>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
